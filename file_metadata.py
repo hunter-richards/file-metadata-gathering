@@ -63,7 +63,8 @@ print(os.getcwd())
 print("Contents of working directory:")
 print(os.listdir(os.getcwd()))
 # Change working directory to the newly unzipped folder containing the downloaded files
-os.chdir('\output\sample-files-master')
+# os.chdir('output\sample-files-master') # original (local)
+os.chdir(r"/output/sample-files-master")
 
 # Create the list of filenames in the folder
 sample_files_list = []
