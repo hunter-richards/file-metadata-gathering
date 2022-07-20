@@ -25,9 +25,7 @@ def get_clean_string_list(input_filename):
     return read_string_list
 
 
-# Function to get the Sha256 hexdigest of the file
 def get_hash_memory_optimized_256(f_path):
-    #h = hashlib.new(mode)
     h = hashlib.sha256()
     with open(f_path, 'rb') as file:
         block = file.read(512)
@@ -77,54 +75,48 @@ interview_df = pd.DataFrame(
 
 today = date.today() # note this is outside the loop; only needs to happen once
 
+# Loop through the list of files and extract the info, adding a row to the df for each
 for file_num in range(len(sample_files_list)):
-    #print("The index is:")
-    #print(file_num) 
-
     filename = sample_files_list[file_num]
-    #print("The file name is:")
-    #print(filename)
 
-    # Create a number from splitting the filename string, to re-order later.
-    #print("The filename string, split by _ character:")
+    # Create a number label from splitting the filename string, for later re-ordering.
+    # First split by "_"
     filename_split_once = filename.split("_")
-    #print(filename_split_once)
-    #print("The last element of the split filename string, split again by . character:")
+    # Split again (last element only) by "." to remove the .txt file extension
     filename_split_twice = filename_split_once[-1].split(".")
-    #print(filename_split_twice)
-    #print("The 'true' ordered number of the file, based on the string splitting, is:")
+    # The "true" order label comes from the first element of this second split
     filename_order_number = filename_split_twice[0]
-    #print(filename_order_number)
 
+    # Get hexdigest and file size
     hexdigest = get_hash_memory_optimized_256(filename)
     file_size = os.path.getsize(filename)
-    # Turn the file's content into a CLEANED list of space-delimited strings
+
+    # To get word counts, create a cleaned list of space-delimited strings
     clean_string_list = get_clean_string_list(filename)
     word_count = len(clean_string_list)
-    # To get the unique word count, eliminate duplicates by converting the list to a set,
+    # To get the unique word count, eliminate duplicates by converting list to set,
     # then just get the length of the set
     unique_word_count = len(set(clean_string_list))
 
-    # For sanity checks (optional), can print first and last elements in the cleaned list:
+    # For spot checks (optional), print first/last elements in the cleaned list:
     #print("The first element in the clean string list is:")
     #print(clean_string_list[0])
     #print("The last element in the clean string list is:")
     #print(clean_string_list[-1])
 
+    # Finally, add the info to the df
     interview_df.iloc[file_num] = pd.Series(
         {'File_Name':filename, 'Sha256_Hexdigest':hexdigest, 'File_Size':file_size, 'Word_Count':word_count,
         'Unique_Word_Count':unique_word_count, 'Current_Date':today, "Temp_Order_Number":int(filename_order_number)})
+
+print("Dataframe assembled!")
 
 # Return to original root directory
 os.chdir("..")
 os.chdir("..")
 
-# This was exporting the unordered CSV just for testing/QC purposes - don't actually export it.
-# (already tested)
+# Export the unordered CSV for testing purposes (optional)
 #interview_df.to_csv("interview_unordered.csv", header=False, index=False)
-
-print("Done with loop! Here is interview_df - BEFORE being re-ordered:")
-print(interview_df)
 
 # Sort the rows of interview_df by 'Temp_Order_Number' column
 interview_df_ordered = interview_df.sort_values(by = 'Temp_Order_Number')
@@ -132,15 +124,10 @@ interview_df_ordered = interview_df.sort_values(by = 'Temp_Order_Number')
 interview_df_ordered = interview_df_ordered.reset_index()
 # Drop the unneeded columns
 interview_df_ordered = interview_df_ordered.drop(columns=['index', 'Temp_Order_Number'])
-print("Now here is the df again, ordered properly by number labels in the filenames:")
-print(interview_df_ordered)
 
-# Now write out the ordered df to CSV -- this is the actual deliverable
+# Export ordered df to CSV
 interview_df_ordered.to_csv("interview.csv", header=False, index=False)
 
-# remove both the output.zip and the unzipped output folder (don't need them anymore)
+# Remove output.zip and the unzipped output folder (don't need them anymore)
 os.remove('output.zip')
 shutil.rmtree('output')
-
-# remember to run pip freeze > requirements.txt at the end to update dependencies!!!
-# https://learnpython.com/blog/python-requirements-file/
