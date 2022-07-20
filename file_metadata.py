@@ -1,4 +1,3 @@
-from tkinter.ttk import Separator
 import requests
 import zipfile
 import os
@@ -116,8 +115,7 @@ for file_num in range(len(sample_files_list)):
         {'File_Name':filename, 'Sha256_Hexdigest':hexdigest, 'File_Size':file_size, 'Word_Count':word_count,
         'Unique_Word_Count':unique_word_count, 'Current_Date':today, "Temp_Order_Number":int(filename_order_number)})
 
-# here is where we should change working directory back to the original root...
-# now go back to original root directory
+# Return to original root directory
 os.chdir("..")
 os.chdir("..")
 
