@@ -57,6 +57,7 @@ else:
 with zipfile.ZipFile("output.zip", 'r') as zip_ref:
     zip_ref.extractall("output")
 
+print("Docker test!")
 # Change working directory to the newly unzipped folder containing the downloaded files
 os.chdir('output\sample-files-master')
 
