@@ -57,13 +57,7 @@ else:
 with zipfile.ZipFile("output.zip", 'r') as zip_ref:
     zip_ref.extractall("output")
 
-print("Docker test!")
-print("Working directory:")
-print(os.getcwd())
-print("Contents of working directory:")
-print(os.listdir(os.getcwd()))
 # Change working directory to the newly unzipped folder containing the downloaded files
-# os.chdir('output\sample-files-master') # original (local)
 os.chdir(r"output/sample-files-master")
 
 # Create the list of filenames in the folder
@@ -131,8 +125,9 @@ interview_df_ordered = interview_df_ordered.reset_index()
 # Drop the unneeded columns
 interview_df_ordered = interview_df_ordered.drop(columns=['index', 'Temp_Order_Number'])
 
-# Export ordered df to CSV
-interview_df_ordered.to_csv("interview.csv", header=False, index=False)
+# Export ordered df to CSV (create a specialized folder for it first)
+os.mkdir("deliverable")
+interview_df_ordered.to_csv(r"deliverable/interview.csv", header=False, index=False)
 
 # Remove output.zip and the unzipped output folder (don't need them anymore)
 os.remove('output.zip')
