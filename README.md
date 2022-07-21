@@ -19,6 +19,12 @@ The project deliverable is a zip file containing all the files necessary to recr
     2. Ubuntu: *docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$(pwd),target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1*
 4. View the contents of the dataset in your working directory: *cat interview.csv*
 
+## Summary of the Code ##
+
+This section provides a brief summary of how the Python code generates the output CSV file.
+
+First, the script downloads all of the .txt files in a single zip file from the URL. It unzips the file and creates a list of all the file names in the unzipped folder with the .txt extension. It then creates a pandas dataframe with the appropriate column names and a number of rows equal to the length of the .txt file name list. Looping through the list of .txt file names, the script retrieves the required information for each file and inserts the information as a row in the dataframe. It orders the dataframe in a more appropriate order (by extracting the number label from each file name) and exports to CSV.
+
 ## Discussion ##
 
 This section contains some of my thoughts about the experience of completing this exercise, and ties those thoughts back into my feelings about good coding practices in general. It is not essential for the exercise submission; it is an optional read.
