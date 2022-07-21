@@ -27,7 +27,7 @@ def get_clean_string_list(input_filename):
 
 def get_hash_memory_optimized_256(f_path):
     h = hashlib.sha256()
-    with open(f_path, 'rb') as file:
+    with open(f_path, "rb") as file:
         block = file.read(512)
         while block:
             h.update(block)
@@ -41,14 +41,14 @@ TODAY = date.today()
 # Store the example top row from the assessment prompt, to enable a quick check later.
 # Convert all values to strings to avoid confusion from datatype inconsistencies.
 FIRST_ROW_SOLUTION_DF = pd.DataFrame(
-    {'File_Name':"sample_file_0.txt",
-    'Sha256_Hexdigest':"89abab31bc4c08205ea4190cac98deb0b9844da121acff9de93ea41adade8a75",
-    'File_Size':371240, 'Word_Count':32025,
-    'Unique_Word_Count':29449, 'Current_Date':TODAY}, index=[0]).astype(str)
+    {"File_Name":"sample_file_0.txt",
+    "Sha256_Hexdigest":"89abab31bc4c08205ea4190cac98deb0b9844da121acff9de93ea41adade8a75",
+    "File_Size":371240, "Word_Count":32025,
+    "Unique_Word_Count":29449, "Current_Date":TODAY}, index=[0]).astype(str)
 
 HEADERS = {
-    "Authorization" : 'token ghp_r5***',
-    "Accept": 'application/vnd.github.v3+json'
+    "Authorization" : "token ghp_r5***",
+    "Accept": "application/vnd.github.v3+json"
 }
 
 URL = "https://github.com/jimmyislive/sample-files/archive/refs/heads/master.zip"
@@ -56,13 +56,13 @@ URL = "https://github.com/jimmyislive/sample-files/archive/refs/heads/master.zip
 # Download the zip file from the repo URL.
 r = requests.get(URL, headers=HEADERS)
 if r.status_code == 200:
-    with open('output.zip', 'wb') as fh:
+    with open("output.zip", "wb") as fh:
         fh.write(r.content)
 else:
     print(r.text)
 
 # Unzip the file.
-with zipfile.ZipFile("output.zip", 'r') as zip_ref:
+with zipfile.ZipFile("output.zip", "r") as zip_ref:
     zip_ref.extractall("output")
 
 # Change working directory to the newly unzipped folder containing the downloaded files.
@@ -73,13 +73,13 @@ sample_files_list = []
 # Iterate directory.
 for file in os.listdir(os.getcwd()):
     # Check only text files.
-    if file.endswith('.txt'):
+    if file.endswith(".txt"):
         sample_files_list.append(file)
 
 # Initialize the pandas dataframe to be populated (and eventually to export as CSV).
 # Temp_Order_Number is a temporary column to be used later for proper sorting.
 interview_df = pd.DataFrame(
-    columns=['File_Name','Sha256_Hexdigest','File_Size','Word_Count', 'Unique_Word_Count',
+    columns=["File_Name","Sha256_Hexdigest","File_Size","Word_Count", "Unique_Word_Count",
     "Current_Date", "Temp_Order_Number"], index=list(range(0, len(sample_files_list), 1)))
 
 # Loop through the list of files and extract the info, adding a row to the df for each.
@@ -113,8 +113,8 @@ for file_num in range(len(sample_files_list)):
 
     # Finally, add the info to the df.
     interview_df.iloc[file_num] = pd.Series(
-        {'File_Name':file_name, 'Sha256_Hexdigest':hexdigest, 'File_Size':file_size, 'Word_Count':word_count,
-        'Unique_Word_Count':unique_word_count, 'Current_Date':TODAY, "Temp_Order_Number":int(file_name_order_number)})
+        {"File_Name":file_name, "Sha256_Hexdigest":hexdigest, "File_Size":file_size, "Word_Count":word_count,
+        "Unique_Word_Count":unique_word_count, "Current_Date":TODAY, "Temp_Order_Number":int(file_name_order_number)})
 
 print("Dataframe generated!")
 
@@ -125,12 +125,12 @@ os.chdir("..")
 # Export the raw (unordered) CSV, for testing purposes (optional).
 #interview_df.to_csv("interview_unordered.csv", header=False, index=False)
 
-# Sort the rows of interview_df by 'Temp_Order_Number' column.
-interview_df_ordered = interview_df.sort_values(by = 'Temp_Order_Number')
+# Sort the rows of interview_df by "Temp_Order_Number" column.
+interview_df_ordered = interview_df.sort_values(by = "Temp_Order_Number")
 # Reset the index.
 interview_df_ordered = interview_df_ordered.reset_index()
 # Drop the unneeded columns.
-interview_df_ordered = interview_df_ordered.drop(columns=['index', 'Temp_Order_Number'])
+interview_df_ordered = interview_df_ordered.drop(columns=["index", "Temp_Order_Number"])
 
 print("Quick test - check if first row matches the example solution (True/False):")
 # COPY the first row of the generated output to avoid altering the submission.
@@ -146,5 +146,5 @@ interview_df_ordered.to_csv(r"deliverable/interview.csv", header=False, index=Fa
 print("Dataframe exported.")
 
 # Remove output.zip and the unzipped output folder (no longer needed).
-os.remove('output.zip')
-shutil.rmtree('output')
+os.remove("output.zip")
+shutil.rmtree("output")
