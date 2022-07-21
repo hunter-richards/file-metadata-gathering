@@ -36,6 +36,15 @@ def get_hash_memory_optimized_256(f_path):
     return h.hexdigest()
 
 
+today = date.today() # note this is outside the loop; only needs to happen once
+
+# Store the example top row from the assessment prompt, to enable a quick check later
+first_row_solution_df = pd.DataFrame(
+    {'File_Name':"sample_file_0.txt",
+    'Sha256_Hexdigest':"89abab31bc4c08205ea4190cac98deb0b9844da121acff9de93ea41adade8a75",
+    'File_Size':371240, 'Word_Count':32025,
+    'Unique_Word_Count':29449, 'Current_Date':today}, index=[0])
+
 # Download the zip file from the repo URL
 
 headers = {
@@ -72,8 +81,6 @@ for file in os.listdir(os.getcwd()):
 interview_df = pd.DataFrame(
     columns=['File_Name','Sha256_Hexdigest','File_Size','Word_Count', 'Unique_Word_Count',
     "Current_Date", "Temp_Order_Number"], index=list(range(0, len(sample_files_list), 1)))
-
-today = date.today() # note this is outside the loop; only needs to happen once
 
 # Loop through the list of files and extract the info, adding a row to the df for each
 for file_num in range(len(sample_files_list)):
@@ -124,6 +131,14 @@ interview_df_ordered = interview_df.sort_values(by = 'Temp_Order_Number')
 interview_df_ordered = interview_df_ordered.reset_index()
 # Drop the unneeded columns
 interview_df_ordered = interview_df_ordered.drop(columns=['index', 'Temp_Order_Number'])
+
+print("Quick test - check if first row matches the example solution (True/False):")
+# COPY the first row of the generated output to avoid altering the submission.
+first_row_to_check = interview_df_ordered.iloc[[0]].copy()
+# To prevent datatype inconsistencies, convert all values to strings
+first_row_to_check = first_row_to_check.astype(str)
+first_row_solution_df = first_row_solution_df.astype(str)
+print(first_row_to_check.equals(first_row_solution_df))
 
 # Export ordered df to CSV (create a specialized folder for it first, if necessary)
 if os.path.isdir("deliverable") == False:
