@@ -5,10 +5,10 @@
 The purpose of this project is to provide a program that accurately gathers metadata about online text files, generates a dataset called interview.csv to store the gathered metadata, and - by running in a docker container - makes the generation and access of the dataset easy to reproduce.
 
 The project deliverable is a zip file containing all the files necessary to recreate the process:
-*This README.md file
-*file_metadata.py
-*requirements.txt
-*Dockerfile
+* This README.md file
+* file_metadata.py
+* requirements.txt
+* Dockerfile
 
 ## How to Build and Run the Container ##
 
