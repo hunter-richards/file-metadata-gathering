@@ -1,18 +1,16 @@
-name: GitHub Actions
+name: generate interview.csv
 on:
   workflow_dispatch:
     inputs:
       test-input:
-        description: "Enter a string"
-        default: "hello-world"
+        description: "Enter a label"
+        default: "test run"
         required: true
         type: string
 jobs:
-  Use-GitHub-Actions:
+  generate-csv:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello world!"
-      - run: pwd
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
       - run: docker build -t cs-hunter-richards-file-metadata-image .
