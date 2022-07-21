@@ -17,3 +17,4 @@ jobs:
       - uses: docker/setup-buildx-action@v1
       - run: docker build -t cs-hunter-richards-file-metadata-image .
       - run: docker run --name cs-hunter-richards-file-metadata --mount type=bind,source="/home/runner/work/file-metadata-gathering/file-metadata-gathering",target=/app/deliverable cs-hunter-richards-file-metadata-image:latest
+      - run: cat interview.csv
