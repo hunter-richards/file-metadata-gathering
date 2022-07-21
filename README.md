@@ -2,18 +2,11 @@
  
 If need to RE-build, first remove the running container:
 docker rm /cs-hunter-richards-file-metadata 
- 
-docker build -t cs-hunter-richards-file-metadata-image .
 
-docker run --name cs-hunter-richards-file-metadata cs-hunter-richards-file-metadata-image:latest
+docker build -t cs-hunter-richards-file-metadata:0.0.1 .
 
+Use a bind mount to extract the csv to the working directory.
 
+docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$pwd,target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1
 
-To extract the CSV file...
-
-Option 1 - docker cp method:
-docker cp cs-hunter-richards-file-metadata:/app/interview.csv .
 cat interview.csv
-
-Option 2 - use a bind mount.
-docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$pwd,target=/app/deliverable cs-hunter-richards-file-metadata-image:latest
