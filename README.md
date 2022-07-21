@@ -1,16 +1,20 @@
-# file metadata gathering
- 
-If need to RE-build, first remove the running container:
-docker rm /cs-hunter-richards-file-metadata 
+# File Metadata Gathering *
 
-docker build -t cs-hunter-richards-file-metadata:0.0.1 .
+## Overview ##
 
-Use a bind mount to extract the csv to the working directory.
+The purpose of this project is to provide a program that accurately gathers metadata about online text files, generates a dataset called interview.csv to store the gathered metadata, and - by running in a docker container - makes the generation and access of the dataset easy to reproduce.
 
-docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$pwd,target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1
+The project deliverable is a zip file containing all the files necessary to recreate the process:
+*This README.md file
+*file_metadata.py
+*requirements.txt
+*Dockerfile
 
-NOTE: the above docker run command might have slightly different syntax in different situations. The above line is for Powershell. Running in Ubuntu, though, the working directory is specified with (very) slightly different syntax, as below (see also the GitHub Actions workflow):
+## How to Build and Run the Container ##
 
-docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$(pwd),target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1
-
-cat interview.csv
+1. Unzip the zip file. Extract the files to a brand new, dedicated folder and set that new folder as your working directory.
+2. Build the container: docker build -t cs-hunter-richards-file-metadata:0.0.1 .
+3. Run the container, and use a bind mount to save the csv file in your working directory.
+ 1. PowerShell: *docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$pwd,target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1*
+ 2. Ubuntu: *docker run --name cs-hunter-richards-file-metadata --mount type=bind,source=$(pwd),target=/app/deliverable cs-hunter-richards-file-metadata:0.0.1*
+4. View the contents of the dataset in your working directory: *cat interview.csv*
