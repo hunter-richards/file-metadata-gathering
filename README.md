@@ -36,3 +36,11 @@ In addition to this general mindset, there are other practices which I find part
 I am also passionate about code readability. It has been said - in the Python style guide, for example - that code is read much more often than it is written. Software engineering is an art as well as a science, and there are certain practices that can greatly enhance the productive power of code by simply making it easier to understand. Upon finishing the development of the core functionality for this exercise, I went back to my code and cleaned it up while referring to the Python style guide for inspiration. What might seem like minor touches - such as ensuring consistency of double vs. single quotation marks, using upper-case variable names for constants, and writing cleanly-worded comments - can collectively add up to make an enormous difference in quality. Furthermore, it's honestly just a lot more fun and enjoyable to write clean code. 
 
 ## Extras ##
+
+As I am passionate about writing high quality code and very excited for this particular opportunity, I wanted to go above and beyond with this exercise. Here is a list of extra touches that I believe, collectively, greatly enhance the final product.
+
+* Ordering the generated CSV file by the number labels in the file names rather than the default (less natural) ordering behavior
+* Including an automatic test comparing the first row of the generated dataframe against the exercise's provided example solution for the same row
+* After noticing "today's date" could ocassionally be inconsistent between the container and a local run, I specified a time zone in the Dockerfile
+* Created a GitHub Actions workflow to enable a very easy web-based test run at the click of a button
+* Automatically delete the downloaded zip file and the unzipped folder at end of script, when no longer needed
