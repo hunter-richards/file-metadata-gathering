@@ -106,6 +106,8 @@ for file_num in range(len(sample_files_list)):
     unique_word_count = len(set(clean_string_list))
 
     # For spot checks (optional), print first/last elements in the cleaned list:
+    #print("File:")
+    #print(file_name)
     #print("The first element in the clean string list is:")
     #print(clean_string_list[0])
     #print("The last element in the clean string list is:")
