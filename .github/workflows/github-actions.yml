@@ -1,0 +1,14 @@
+name: GitHub Actions
+on:
+  workflow_dispatch:
+    inputs:
+      test-input:
+        description: "Enter a string"
+        default: "hello-world"
+        required: true
+        type: string
+jobs:
+  Use-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello world!"
