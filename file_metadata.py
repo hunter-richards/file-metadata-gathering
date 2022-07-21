@@ -125,8 +125,9 @@ interview_df_ordered = interview_df_ordered.reset_index()
 # Drop the unneeded columns
 interview_df_ordered = interview_df_ordered.drop(columns=['index', 'Temp_Order_Number'])
 
-# Export ordered df to CSV (create a specialized folder for it first)
-os.mkdir("deliverable")
+# Export ordered df to CSV (create a specialized folder for it first, if necessary)
+if os.path.isdir("deliverable") == False:
+    os.mkdir("deliverable")
 interview_df_ordered.to_csv(r"deliverable/interview.csv", header=False, index=False)
 
 # Remove output.zip and the unzipped output folder (don't need them anymore)
