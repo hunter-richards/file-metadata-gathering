@@ -11,6 +11,7 @@ jobs:
   Use-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - run: cat interview.csv
       - run: echo "Hello world!"
       - run: pwd
       - uses: actions/checkout@v2
